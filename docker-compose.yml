@@ -50,6 +50,10 @@ services:
       - PORT=3002
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${DIRECT_URL_USERS_DB}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - DATABASE_KEY=${DATABASE_KEY}
+      - DATABASE_ADMIN_KEY=${DATABASE_ADMIN_KEY}
+
 
   trajectory-ms:
     build: ./trajectory-ms

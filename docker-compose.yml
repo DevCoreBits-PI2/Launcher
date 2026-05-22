@@ -53,6 +53,7 @@ services:
       - SUPABASE_URL=${SUPABASE_URL}
       - DATABASE_KEY=${DATABASE_KEY}
       - DATABASE_ADMIN_KEY=${DATABASE_ADMIN_KEY}
+      - REDIRECT_URL=${REDIRECT_URL}
 
 
   trajectory-ms:

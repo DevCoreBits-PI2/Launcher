@@ -1,0 +1,59 @@
+services:
+
+  nats-server:
+    image: nats:latest
+    volumes:
+      - ./nats-server.conf:/etc/nats/nats-server.conf:ro
+    command: ["-c", "/etc/nats/nats-server.conf"]
+    ports:
+      - "8222:8222"
+     
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: dockerfile.prod
+    image: gateway-prod
+    ports:
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
+    environment:
+      - PORT=${GATEWAY_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
+
+  administrative-data-ms:
+    build:
+      context: ./administrative-data-ms
+      dockerfile: dockerfile.prod
+    image: administrative-data-ms-prod
+    environment:
+      - PORT=3001
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${DIRECT_URL_ADMINISTRATIVE_DATA_DB}
+      - CLOUDINARY_NAME=${CLOUDINARY_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS}
+
+  trajectory-ms:
+    build: 
+      context: ./trajectory-ms
+      dockerfile: dockerfile.prod
+    image: trajectory-ms-prod
+    environment:
+      - PORT=3002
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${DIRECT_URL_TRAJECTORY_DB}
+  
+  users-ms:
+    build:
+      context: ./users-ms
+      dockerfile: dockerfile.prod
+    image: users-ms-prod
+    environment:
+      - PORT=3003
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${DIRECT_URL_USERS_DB}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - DATABASE_KEY=${DATABASE_KEY}
+      - DATABASE_ADMIN_KEY=${DATABASE_ADMIN_KEY}

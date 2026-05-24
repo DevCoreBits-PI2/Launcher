@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gateway
+  name: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/gateway
+        name: gateway
+        env:
+        - name: PORT
+          value: "3000"
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        resources: {}
+status: {}

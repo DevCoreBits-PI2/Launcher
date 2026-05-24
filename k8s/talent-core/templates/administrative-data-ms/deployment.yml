@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: administrative-data-ms
+  name: administrative-data-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: administrative-data-ms
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: administrative-data-ms
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/administrative-data-ms
+        name: administrative-data-ms
+        env:
+        - name: PORT
+          value: "3001"
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: administrative-data-ms-secret
+              key: database_url
+        - name: CLOUDINARY_NAME
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-name
+              key: cloudinary-name
+        - name: CLOUDINARY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-api-key
+              key: cloudinary-api-key
+        - name: CLOUDINARY_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-api-secret
+              key: cloudinary-api-secret
+        - name: RESEND_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: resend-api-key
+              key: resend-api-key
+        - name: EMAIL_FROM
+          valueFrom:
+            secretKeyRef:
+              name: email-from
+              key: email-from
+        - name: EMAIL_FROM_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: email-from-address
+              key: email-from-address        
+        resources: {}
+status: {}

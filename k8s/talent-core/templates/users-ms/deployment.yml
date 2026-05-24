@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: users-ms
+  name: users-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-ms
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: users-ms
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/users-ms
+        name: users-ms
+        env:
+        - name: PORT
+          value: "3003"
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: users-ms-secret
+              key: database_url
+        - name: SUPABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: supabase-url
+        - name: DATABASE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: database-key
+        - name: DATABASE_ADMIN_KEY
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: database-admin-key
+        - name: REDIRECT_URL
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: redirect-url
+        - name: CLOUDINARY_NAME
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-name
+              key: cloudinary-name
+        - name: CLOUDINARY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-api-key
+              key: cloudinary-api-key
+        - name: CLOUDINARY_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-api-secret
+              key: cloudinary-api-secret
+        resources: {}
+status: {}

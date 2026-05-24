@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: trajectory-ms
+  name: trajectory-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trajectory-ms
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: trajectory-ms
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/trajectory-ms
+        name: trajectory-ms
+        env:
+        - name: PORT
+          value: "3002"
+        - name: NATS_SERVERS
+          value: "nats://nats"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: trajectory-ms-secret
+              key: database_url
+        resources: {}
+status: {}

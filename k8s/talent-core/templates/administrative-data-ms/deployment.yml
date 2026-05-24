@@ -58,5 +58,11 @@ spec:
             secretKeyRef:
               name: email-from-address
               key: email-from-address        
-        resources: {}
+        resources:
+          requests:
+            cpu: "150m"
+            memory: "384Mi"
+          limits:
+            cpu: "400m"
+            memory: "768Mi"
 status: {}

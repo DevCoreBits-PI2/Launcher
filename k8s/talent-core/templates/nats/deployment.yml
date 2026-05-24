@@ -18,5 +18,25 @@ spec:
       containers:
       - image: nats:latest
         name: nats
-        resources: {}
+        command: ["nats-server", "-c", "/etc/nats/nats-server.conf"]
+        ports:
+        - containerPort: 4222
+          name: client
+        - containerPort: 8222
+          name: monitor
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nats/nats-server.conf
+          subPath: nats-server.conf
+        resources:
+          requests:
+            cpu: "150m"
+            memory: "384Mi"
+          limits:
+            cpu: "400m"
+            memory: "768Mi"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nats-config
 status: {}

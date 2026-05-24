@@ -12,7 +12,7 @@ services:
     build:
       context: ./gateway
       dockerfile: dockerfile.prod
-    image: gateway-prod
+    image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/gateway
     ports:
       - ${GATEWAY_PORT}:${GATEWAY_PORT}
     environment:
@@ -23,7 +23,7 @@ services:
     build:
       context: ./administrative-data-ms
       dockerfile: dockerfile.prod
-    image: administrative-data-ms-prod
+    image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/administrative-data-ms
     environment:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
@@ -39,7 +39,7 @@ services:
     build: 
       context: ./trajectory-ms
       dockerfile: dockerfile.prod
-    image: trajectory-ms-prod
+    image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/trajectory-ms
     environment:
       - PORT=3002
       - NATS_SERVERS=nats://nats-server:4222
@@ -49,7 +49,7 @@ services:
     build:
       context: ./users-ms
       dockerfile: dockerfile.prod
-    image: users-ms-prod
+    image: us-central1-docker.pkg.dev/talent-core-497108/talent-core-repository/users-ms
     environment:
       - PORT=3003
       - NATS_SERVERS=nats://nats-server:4222

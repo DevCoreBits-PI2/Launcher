@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: talent-core-ingress-v2
+  annotations:
+    # GCE Ingress
+    kubernetes.io/ingress.class: "gce"
+    cloud.google.com/backend-config: "talent-core-backend-config"
+    # Deshabilitamos SSL por ahora
+    kubernetes.io/ingress.allow-http: "true"
+spec:
+  rules:
+    - http:
+        paths:
+        - path: /*
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: gateway
+              port:
+                number: 3000

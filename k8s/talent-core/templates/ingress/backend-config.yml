@@ -1,0 +1,9 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: talent-core-backend-config
+spec:
+  # Timeout para procesos largos (2 minutos)
+  timeoutSec: 120
+  connectionDraining:
+    drainingTimeoutSec: 60

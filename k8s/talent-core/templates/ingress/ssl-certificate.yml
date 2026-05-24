@@ -1,7 +1,7 @@
-# apiVersion: networking.gke.io/v1
-# kind: ManagedCertificate
-# metadata:
-#   name: talent-core-ssl-cert
-# spec:
-#   domains:
-#     - api.devcorebits.com 
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: talent-core-ssl-cert
+spec:
+  domains:
+    - api.devcorebits.com 
